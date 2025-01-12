@@ -1,21 +1,14 @@
-import { useState } from "react";
-import { Button } from "./components/ui/button";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Home from "./pages/Home";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <h1 className="line-clamp-2 text-red-900">Vite + React</h1>
-      <div className="card top-2 bg-red-300 px-2 placeholder-zinc-50">
-        <Button
-          variant="destructive"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Click me. Count is {count}
-        </Button>
-      </div>
-    </>
+    <div className="">
+      <Header />
+      <Home />
+      <Footer />
+    </div>
   );
 }
 
