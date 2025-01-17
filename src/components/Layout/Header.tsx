@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { siteConfig } from "@/config/site";
+import MainNavigation from "./MainNavigation";
 
 function Header() {
   return (
     <header className="w-full border-b">
       <nav className="container flex h-16 items-center justify-between">
-        <Link to="/">Fashion Shop</Link>
-        <button className="">&#8801;</button>
+        <MainNavigation items={siteConfig.mainNav}/>
       </nav>
     </header>
   );
