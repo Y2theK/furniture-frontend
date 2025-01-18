@@ -1,4 +1,8 @@
-import { HomeIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
+import {
+  HomeIcon,
+  HamburgerMenuIcon,
+  ExclamationTriangleIcon,
+} from "@radix-ui/react-icons";
 
 export type IconProps = React.HTMLAttributes<SVGElement>;
 export const Icons = {
@@ -20,4 +24,5 @@ export const Icons = {
   ),
   home: HomeIcon,
   menu: HamburgerMenuIcon,
+  exclamation: ExclamationTriangleIcon,
 };
