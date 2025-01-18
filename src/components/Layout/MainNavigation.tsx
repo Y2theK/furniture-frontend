@@ -20,55 +20,60 @@ interface MainNavigationProps {
   items: MainNavItem[];
 }
 
-function MainNavigation({items} : MainNavigationProps) {
+function MainNavigation({ items }: MainNavigationProps) {
   return (
     <div className="hidden gap-6 lg:flex">
       <Link to="/" className="flex items-center space-x-2">
         <Icons.logo className="size-7" aria-hidden="true" />
-        <span className="font-bold inline-block">{siteConfig.name}</span>
-        <span className="sr-only" >Home</span>
+        <span className="inline-block font-bold">{siteConfig.name}</span>
+        <span className="sr-only">Home</span>
       </Link>
       <NavigationMenu>
         <NavigationMenuList>
-          {items?.[0]?.card ? ( <NavigationMenuItem>  
-            <NavigationMenuTrigger>{items[0].title}</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                <li className="row-span-3">
-                  <NavigationMenuLink asChild>
-                    <Link
-                      className="flex size-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      to="/"
-                    >
-                      <Icons.logo className="size-6" aria-hidden="true"/>
-                      <div className="mb-2 mt-4 text-lg font-medium">
-                        {siteConfig.name}
-                      </div>
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        {siteConfig.description}
-                      </p>
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
-              {items[0].card.map((item) => (  
-                <ListItem href={item.href} title={item.title} key={item.title}>
-                  {item.description}
-                </ListItem>
-              ))}
-              
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>) : null}
-          {items?.[0]?.menu && items[0].menu.map((item) => (
+          {items?.[0]?.card ? (
             <NavigationMenuItem>
-            <Link to={String(item.href)}>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                {item.title}
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          ))}
-          
+              <NavigationMenuTrigger>{items[0].title}</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <li className="row-span-3">
+                    <NavigationMenuLink asChild>
+                      <Link
+                        className="flex size-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        to="/"
+                      >
+                        <Icons.logo className="size-6" aria-hidden="true" />
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          {siteConfig.name}
+                        </div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          {siteConfig.description}
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                  {items[0].card.map((item) => (
+                    <ListItem
+                      href={item.href}
+                      title={item.title}
+                      key={item.title}
+                    >
+                      {item.description}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          ) : null}
+          {items?.[0]?.menu &&
+            items[0].menu.map((item) => (
+              <NavigationMenuItem>
+                <Link to={String(item.href)}>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    {item.title}
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            ))}
         </NavigationMenuList>
       </NavigationMenu>
     </div>
@@ -78,7 +83,7 @@ function MainNavigation({items} : MainNavigationProps) {
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a">
->(({ className, title, children,href, ...props }, ref) => {
+>(({ className, title, children, href, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
