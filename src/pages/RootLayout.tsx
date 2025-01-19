@@ -6,7 +6,9 @@ function RootLayout() {
   return (
     <div className="flex h-screen flex-col">
       <Header />
-      <Outlet />
+      <div className="flex-1">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
