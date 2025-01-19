@@ -7,10 +7,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {
@@ -20,11 +16,25 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { MainNavItem } from "@/types";
+import { useEffect, useState } from "react";
 
 interface MainNavigationProps {
   items: MainNavItem[];
 }
 function MobileNavigation({ items }: MainNavigationProps) {
+  const [isDesktop, setIsDesktop] = useState(false);
+  const query = "(min-width: 1024px)";
+  useEffect(() => {
+    const result = window.matchMedia(query);
+    result.addEventListener("change", (e) => {
+      setIsDesktop(e.matches);
+      return () => {
+        result.removeEventListener("change", () => {});
+      };
+    });
+  }, [query]);
+
+  if (isDesktop) return null;
   return (
     <div className="lg:hidden">
       <Sheet>
