@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import Couch from "@/data/images/couch.png";
 import { Button } from "@/components/ui/button";
-// import CarouselCard from "@/components/products/CarouselCard";
 import { products } from "@/data/products";
 import { posts } from "@/data/posts";
+import CarouselCard from "@/components/products/CarouselCard";
 // import BlogCard from "@/components/blogs/BlogCard";
 // import ProductCard from "@/components/products/ProductCard";
 
@@ -29,11 +29,11 @@ function Home() {
   );
 
   return (
-    <div className="container mx-auto mt-16">
+    <div className="container mx-auto mt-0 lg:mt-16">
       <div className="flex flex-col lg:flex-row lg:justify-between">
         {/* Text Section */}
-        <div className="my-8 text-center lg:mb-0 lg:mt-16 lg:w-2/5 lg:text-left">
-          <h1 className="text-own mb-4 text-4xl font-extrabold lg:mb-8 lg:text-6xl">
+        <div className="my-8 mt-48 text-center lg:mb-0 lg:mt-16 lg:w-2/5 lg:text-left">
+          <h1 className="text-own mb-4 mt-0 text-4xl font-extrabold lg:mb-8 lg:mt-16 lg:text-6xl">
             Modern Interior Design Studio
           </h1>
           <p className="text-own mb-6 lg:mb-8">
@@ -59,8 +59,8 @@ function Home() {
         {/* Image Section */}
         <img src={Couch} alt="Couch" className="w-full lg:w-3/5" />
       </div>
-      {/* <CarouselCard products={products} />
-      <Title
+      <CarouselCard products={products} />
+      {/* <Title
         title="Featured Products"
         href="/products"
         sideText="View All Products"
