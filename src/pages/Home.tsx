@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { products } from "@/data/products";
 import { posts } from "@/data/posts";
 import CarouselCard from "@/components/products/CarouselCard";
-// import BlogCard from "@/components/blogs/BlogCard";
+import BlogCard from "@/components/blogs/BlogCard";
 // import ProductCard from "@/components/products/ProductCard";
 
 const samplePosts = posts.slice(0, 3);
@@ -33,10 +33,10 @@ function Home() {
       <div className="flex flex-col lg:flex-row lg:justify-between">
         {/* Text Section */}
         <div className="my-8 mt-48 text-center lg:mb-0 lg:mt-16 lg:w-2/5 lg:text-left">
-          <h1 className="text-own mb-4 mt-0 text-4xl font-extrabold lg:mb-8 lg:mt-16 lg:text-6xl">
+          <h1 className="mb-4 mt-0 text-4xl font-extrabold text-own lg:mb-8 lg:mt-16 lg:text-6xl">
             Modern Interior Design Studio
           </h1>
-          <p className="text-own mb-6 lg:mb-8">
+          <p className="mb-6 text-own lg:mb-8">
             Furniture is an essential component of any living space, providing
             functionality, comfort, and aesthetic appeal.
           </p>
@@ -50,7 +50,7 @@ function Home() {
             <Button
               asChild
               variant="outline"
-              className="text-own rounded-full px-8 py-6 text-base font-bold"
+              className="rounded-full px-8 py-6 text-base font-bold text-own"
             >
               <Link to="#">Explore</Link>
             </Button>
@@ -60,18 +60,18 @@ function Home() {
         <img src={Couch} alt="Couch" className="w-full lg:w-3/5" />
       </div>
       <CarouselCard products={products} />
-      {/* <Title
+      <Title
         title="Featured Products"
         href="/products"
         sideText="View All Products"
       />
-      <div className="grid grid-cols-1 gap-6 px-4 md:grid-cols-2 md:px-0 lg:grid-cols-4">
+      {/* <div className="grid grid-cols-1 gap-6 px-4 md:grid-cols-2 md:px-0 lg:grid-cols-4">
         {sampleProducts.map((product) => (
           <ProductCard product={product} key={product.id} />
         ))}
-      </div>
+      </div> */}
       <Title title="Recent Blog" href="/blogs" sideText="View All Posts" />
-      <BlogCard posts={samplePosts} /> */}
+      <BlogCard posts={samplePosts} />
     </div>
   );
 }
