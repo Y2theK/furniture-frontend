@@ -4,7 +4,7 @@ import {
   ExclamationTriangleIcon,
   PaperPlaneIcon,
 } from "@radix-ui/react-icons";
-import { ArrowLeft, Layers } from "lucide-react";
+import { ArrowLeft, Layers, PlusIcon } from "lucide-react";
 
 export type IconProps = React.HTMLAttributes<SVGElement>;
 export const Icons = {
@@ -29,5 +29,6 @@ export const Icons = {
   exclamation: ExclamationTriangleIcon,
   paperPlane: PaperPlaneIcon,
   layers: Layers,
-  arrowLeft: ArrowLeft
+  arrowLeft: ArrowLeft,
+  plus: PlusIcon,
 };

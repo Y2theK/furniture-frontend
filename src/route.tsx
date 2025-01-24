@@ -7,6 +7,8 @@ import Error from "@/pages/Error";
 import About from "@/pages/About";
 import Blog from "@/pages/blogs/Blog";
 import BlogDetail from "@/pages/blogs/BlogDetail";
+import Product from "@/pages/products/Product";
+import ProductDetail from "@/pages/products/ProductDetail";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ export const router = createBrowserRouter([
       {
         path: "blogs/:postId",
         element: <BlogDetail />,
+      },
+      {
+        path: "products",
+        element: <Product />,
+      },
+      {
+        path: "products/:productId",
+        element: <ProductDetail />,
       },
     ],
   },
