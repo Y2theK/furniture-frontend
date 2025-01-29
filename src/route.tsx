@@ -1,15 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
-
+import { lazy, Suspense } from "react";
 import Home from "@/pages/Home";
 import Contact from "@/pages/Contact";
 import RootLayout from "@/pages/RootLayout";
 import Error from "@/pages/Error";
 import About from "@/pages/About";
-import Blog from "@/pages/blogs/Blog";
-import BlogDetail from "@/pages/blogs/BlogDetail";
+const Blog = lazy(() => import("@/pages/blogs/Blog"));
+const BlogDetail = lazy(() => import("@/pages/blogs/BlogDetail"));
 import Product from "@/pages/products/Product";
 import ProductDetail from "@/pages/products/ProductDetail";
-
+import Login from "@/pages/auth/Login";
+import Register from "@/pages/auth/Register";
+const SuspenseFallback = () => {
+  return (
+    <div className="text-center">Loading.......</div>
+  );
+}
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -30,11 +36,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "blogs",
-        element: <Blog />,
+        element: <Suspense fallback={ <SuspenseFallback />}><Blog /></Suspense>,
       },
       {
         path: "blogs/:postId",
-        element: <BlogDetail />,
+        element: <Suspense fallback={< SuspenseFallback/>}><BlogDetail /></Suspense>,
       },
       {
         path: "products",
@@ -45,5 +51,13 @@ export const router = createBrowserRouter([
         element: <ProductDetail />,
       },
     ],
+  },
+  {
+    path: "login",
+    element: <Login />,
+  },
+  {
+    path: "sign-in",
+    element: <Register />,
   },
 ]);

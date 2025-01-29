@@ -3,6 +3,9 @@ import {
   HamburgerMenuIcon,
   ExclamationTriangleIcon,
   PaperPlaneIcon,
+  DashboardIcon,
+  GearIcon,
+  ExitIcon,
 } from "@radix-ui/react-icons";
 import { ArrowLeft, HeartIcon, Layers, MinusIcon, PlusIcon, StarIcon } from "lucide-react";
 
@@ -34,4 +37,7 @@ export const Icons = {
   star: StarIcon,
   heart: HeartIcon,
   minus: MinusIcon,
+  dashboard: DashboardIcon,
+  gear: GearIcon,
+  exit: ExitIcon,
 };
