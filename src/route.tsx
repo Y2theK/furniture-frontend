@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Home, { homeLoader } from "@/pages/Home";
 import Contact from "@/pages/Contact";
-import RootLayout from "@/pages/RootLayout";
+import RootLayout, { logoutAction } from "@/pages/RootLayout";
 import Error from "@/pages/Error";
 import About from "@/pages/About";
 const Blog = lazy(() => import("@/pages/blogs/Blog"));
@@ -65,6 +65,11 @@ export const router = createBrowserRouter([
     path: "login",
     action: loginAction,
     element: <Login />,
+  },
+  {
+    path: "logout",
+    action: logoutAction,
+    loader: async () => {},
   },
   {
     path: "register",

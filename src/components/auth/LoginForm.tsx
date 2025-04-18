@@ -2,6 +2,7 @@ import {
   ActionFunctionArgs,
   Link,
   redirect,
+  useNavigation,
   useSubmit,
 } from "react-router-dom";
 
@@ -43,12 +44,14 @@ const formSchema = z.object({
     .min(8, {
       message: "Password must be 8 digits.",
     })
-    .max(8, "Password must be 8 digits.")
-    .regex(/^[0-9]+$/, "Password must be a number"),
+    .max(8, "Password must be 8 digits."),
 });
 
 export default function LoginForm() {
   const submit = useSubmit();
+  const navigation = useNavigation();
+
+  const isSubmitting = navigation.state === "submitting";
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -121,7 +124,6 @@ export default function LoginForm() {
                       // type="password"
                       // placeholder="********"
                       required
-                      inputMode="numeric"
                       {...field}
                     />
                   </FormControl>
@@ -130,7 +132,7 @@ export default function LoginForm() {
               )}
             />
             <Button type="submit" className="w-full">
-              Sign In
+              {isSubmitting ? "Submitting..." : "Sign In"}
             </Button>
             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
               <span className="relative z-10 bg-background px-2 text-muted-foreground">
