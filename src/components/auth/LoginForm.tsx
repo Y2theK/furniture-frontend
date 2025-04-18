@@ -2,6 +2,7 @@ import {
   ActionFunctionArgs,
   Link,
   redirect,
+  useActionData,
   useNavigation,
   useSubmit,
 } from "react-router-dom";
@@ -30,6 +31,7 @@ import {
 import { PasswordInput } from "./Password-Input";
 import { authApi } from "@/api";
 import { AxiosError } from "axios";
+import { error } from "console";
 
 const formSchema = z.object({
   phone: z
@@ -49,6 +51,11 @@ const formSchema = z.object({
 
 export default function LoginForm() {
   const submit = useSubmit();
+  const actionData = useActionData() as {
+    error?: string;
+    message?: string;
+  };
+  const errorMessage = actionData?.error || null;
   const navigation = useNavigation();
 
   const isSubmitting = navigation.state === "submitting";
@@ -131,6 +138,9 @@ export default function LoginForm() {
                 </FormItem>
               )}
             />
+            {actionData && (
+              <p className="text-red-400">{actionData?.message}</p>
+            )}
             <Button type="submit" className="w-full">
               {isSubmitting ? "Submitting..." : "Sign In"}
             </Button>
