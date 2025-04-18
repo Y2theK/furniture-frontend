@@ -1,4 +1,9 @@
-import { Link } from "react-router-dom";
+import {
+  ActionFunctionArgs,
+  Link,
+  redirect,
+  useSubmit,
+} from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,7 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,6 +27,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { PasswordInput } from "./Password-Input";
+import { authApi } from "@/api";
+import { AxiosError } from "axios";
 
 const formSchema = z.object({
   phone: z
@@ -42,6 +48,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const submit = useSubmit();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,8 +59,11 @@ export default function LoginForm() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    // setLoading(true);
-    // Call api
+    // pass the form data to the action function
+    submit(values, {
+      method: "POST",
+      action: "/login",
+    });
   }
   return (
     <Card className="mx-auto max-w-sm">
@@ -144,3 +154,27 @@ export default function LoginForm() {
     </Card>
   );
 }
+
+export const loginAction = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const authData = {
+    phone: formData.get("phone"),
+    password: formData.get("password"),
+  };
+
+  try {
+    const response = await authApi.post("/login", authData);
+    if (response.status !== 200) {
+      return { error: response.data || "Login failed" };
+    }
+    const redirectTo = new URL(request.url).searchParams.get("redirect") || "/"; // if there is redirect url, redirect to that page else redirect to home page
+    return redirect(redirectTo);
+  } catch (error) {
+    console.log("Login action: ", error);
+    if (error instanceof AxiosError) {
+      const errorMessage = error.response?.data?.message || "Login failed";
+      return { error: errorMessage };
+    }
+    throw error;
+  }
+};

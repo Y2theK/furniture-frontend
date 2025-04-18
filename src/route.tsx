@@ -11,6 +11,7 @@ import Product from "@/pages/products/Product";
 import ProductDetail from "@/pages/products/ProductDetail";
 import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
+import { loginAction } from "./components/auth/LoginForm";
 const SuspenseFallback = () => {
   return <div className="text-center">Loading.......</div>;
 };
@@ -62,6 +63,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "login",
+    action: loginAction,
     element: <Login />,
   },
   {

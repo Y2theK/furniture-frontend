@@ -21,7 +21,7 @@ api.interceptors.response.use(
   },
 );
 
-const authApi = axios.create({
+export const authApi = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
     "Content-Type": "application/json",
