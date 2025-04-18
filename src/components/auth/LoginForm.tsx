@@ -22,6 +22,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { PasswordInput } from "./Password-Input";
 
 const formSchema = z.object({
   phone: z
@@ -105,10 +106,10 @@ export default function LoginForm() {
                   </div>
 
                   <FormControl>
-                    <Input
+                    <PasswordInput
                       id="password"
-                      type="password"
-                      placeholder="********"
+                      // type="password"
+                      // placeholder="********"
                       required
                       inputMode="numeric"
                       {...field}
@@ -118,8 +119,8 @@ export default function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" asChild>
-              <Link to="/">Sign In</Link>
+            <Button type="submit" className="w-full">
+              Sign In
             </Button>
             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
               <span className="relative z-10 bg-background px-2 text-muted-foreground">
