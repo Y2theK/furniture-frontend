@@ -6,6 +6,7 @@ import { posts } from "@/data/posts";
 import CarouselCard from "@/components/products/CarouselCard";
 import BlogCard from "@/components/blogs/BlogCard";
 import ProductCard from "@/components/products/ProductCard";
+import api from "@/api";
 
 const samplePosts = posts.slice(0, 3);
 const sampleProducts = products.slice(0, 4);
@@ -77,3 +78,14 @@ function Home() {
 }
 
 export default Home;
+
+export const homeLoader = async () => {
+  try {
+    const response = await api.get("/users/products");
+    return response.data;
+  } catch (error) {
+    console.log("home loader: ", error);
+
+    throw error;
+  }
+};

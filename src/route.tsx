@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import Home from "@/pages/Home";
+import Home, { homeLoader } from "@/pages/Home";
 import Contact from "@/pages/Contact";
 import RootLayout from "@/pages/RootLayout";
 import Error from "@/pages/Error";
@@ -12,10 +12,8 @@ import ProductDetail from "@/pages/products/ProductDetail";
 import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
 const SuspenseFallback = () => {
-  return (
-    <div className="text-center">Loading.......</div>
-  );
-}
+  return <div className="text-center">Loading.......</div>;
+};
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +23,8 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: <Home />,
+        // before the page loads, we can do some data fetching
+        loader: homeLoader,
       },
       {
         path: "contact",
@@ -36,11 +36,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "blogs",
-        element: <Suspense fallback={ <SuspenseFallback />}><Blog /></Suspense>,
+        element: (
+          <Suspense fallback={<SuspenseFallback />}>
+            <Blog />
+          </Suspense>
+        ),
       },
       {
         path: "blogs/:postId",
-        element: <Suspense fallback={< SuspenseFallback/>}><BlogDetail /></Suspense>,
+        element: (
+          <Suspense fallback={<SuspenseFallback />}>
+            <BlogDetail />
+          </Suspense>
+        ),
       },
       {
         path: "products",
