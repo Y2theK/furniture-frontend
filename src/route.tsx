@@ -1,8 +1,8 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Home, { homeLoader } from "@/pages/Home";
 import Contact from "@/pages/Contact";
-import RootLayout, { logoutAction } from "@/pages/RootLayout";
+import RootLayout from "@/pages/RootLayout";
 import Error from "@/pages/Error";
 import About from "@/pages/About";
 const Blog = lazy(() => import("@/pages/blogs/Blog"));
@@ -11,7 +11,8 @@ import Product from "@/pages/products/Product";
 import ProductDetail from "@/pages/products/ProductDetail";
 import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
-import { loginAction } from "./components/auth/LoginForm";
+import { loginAction, loginLoader } from "./components/auth/LoginForm";
+import api from "./api";
 const SuspenseFallback = () => {
   return <div className="text-center">Loading.......</div>;
 };
@@ -63,13 +64,24 @@ export const router = createBrowserRouter([
   },
   {
     path: "login",
+    loader: loginLoader,
     action: loginAction,
     element: <Login />,
   },
   {
     path: "logout",
-    action: logoutAction,
-    loader: async () => {},
+    action: async () => {
+      try {
+        await api.post("logout");
+        return redirect("/login");
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    },
+    loader: async () => {
+      return redirect("/");
+    },
   },
   {
     path: "register",

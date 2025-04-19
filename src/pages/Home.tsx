@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import Couch from "@/data/images/couch.png";
 import { Button } from "@/components/ui/button";
 import { products } from "@/data/products";
@@ -85,7 +85,6 @@ export const homeLoader = async () => {
     return response.data;
   } catch (error) {
     console.log("home loader: ", error);
-
     throw error;
   }
 };

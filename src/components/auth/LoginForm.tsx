@@ -31,7 +31,6 @@ import {
 import { PasswordInput } from "./Password-Input";
 import { authApi } from "@/api";
 import { AxiosError } from "axios";
-import { error } from "console";
 
 const formSchema = z.object({
   phone: z
@@ -166,6 +165,18 @@ export default function LoginForm() {
     </Card>
   );
 }
+
+export const loginLoader = async () => {
+  try {
+    const response = await authApi.get("auth-check");
+    if (response.status !== 200) {
+      return null;
+    }
+    return redirect("/");
+  } catch (error) {
+    console.log("Loader error:", error);
+  }
+};
 
 export const loginAction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
