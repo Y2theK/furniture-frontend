@@ -67,7 +67,6 @@ export default function LoginForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     // pass the form data to the action function
     submit(values, {
       method: "POST",
