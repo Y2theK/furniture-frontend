@@ -180,13 +180,22 @@ export const loginLoader = async () => {
 
 export const loginAction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
-  const authData = {
-    phone: formData.get("phone"),
-    password: formData.get("password"),
-  };
+  const credentials = Object.fromEntries(formData);
+  // const authData = {
+  //   phone: formData.get("phone"),
+  //   password: formData.get("password"),
+  // };
 
   try {
-    const response = await authApi.post("/login", authData);
+    const response = await authApi.post("/login", credentials);
+    // const response = await fetch(import.meta.env.VITE_API_URL + "/login", {
+    //   method: "POST",
+    //   body: JSON.stringify(credentials),
+    //   credentials: "include",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
     if (response.status !== 200) {
       return { error: response.data || "Login failed" };
     }
