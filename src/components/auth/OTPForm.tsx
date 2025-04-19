@@ -9,7 +9,6 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -50,7 +49,7 @@ export function InputOTPForm({
     error?: string;
     message?: string;
   };
-  const errorMessage = actionData?.error || null;
+  //   const errorMessage = actionData?.error || null;
   const navigation = useNavigation();
 
   const isSubmitting = navigation.state === "submitting";

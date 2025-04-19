@@ -1,4 +1,4 @@
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Couch from "@/data/images/couch.png";
 import { Button } from "@/components/ui/button";
 import { products } from "@/data/products";

@@ -10,7 +10,6 @@ const BlogDetail = lazy(() => import("@/pages/blogs/BlogDetail"));
 import Product from "@/pages/products/Product";
 import ProductDetail from "@/pages/products/ProductDetail";
 import Login from "@/pages/auth/Login";
-import Register from "@/pages/auth/Register";
 import { loginAction, loginLoader } from "./components/auth/LoginForm";
 import api from "./api";
 import AuthRootLayout from "./pages/AuthRootLayout";

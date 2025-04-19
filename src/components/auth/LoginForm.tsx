@@ -54,7 +54,7 @@ export default function LoginForm() {
     error?: string;
     message?: string;
   };
-  const errorMessage = actionData?.error || null;
+  // const errorMessage = actionData?.error || null;
   const navigation = useNavigation();
 
   const isSubmitting = navigation.state === "submitting";
