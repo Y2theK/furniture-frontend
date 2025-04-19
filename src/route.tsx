@@ -16,6 +16,7 @@ import api from "./api";
 import AuthRootLayout from "./pages/AuthRootLayout";
 import SignUp from "./pages/auth/SignUp";
 import OTP from "./pages/auth/OTP";
+import ConfirmPassword from "./pages/auth/ConfirmPassword";
 const SuspenseFallback = () => {
   return <div className="text-center">Loading.......</div>;
 };
@@ -92,6 +93,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <SignUp /> },
       { path: "otp", element: <OTP /> },
+      { path: "confirm-password", element: <ConfirmPassword /> },
     ],
   },
 ]);

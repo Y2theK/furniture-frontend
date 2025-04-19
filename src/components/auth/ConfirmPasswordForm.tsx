@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "./Password-Input";
 import { Icons } from "../icons";
 
-export function SignUpForm({
+export function ConfirmPasswordForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
@@ -32,16 +32,15 @@ export function SignUpForm({
           </div>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="email">Phone</Label>
-              <Input
-                id="phone"
-                type="text"
-                placeholder="09123123123"
-                required
-              />
+              <Label htmlFor="email">Password</Label>
+              <PasswordInput type="password" required />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="email">Confirm Password</Label>
+              <PasswordInput type="password" required />
             </div>
             <Button type="submit" className="w-full">
-              Login
+              Submit
             </Button>
           </div>
           <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
