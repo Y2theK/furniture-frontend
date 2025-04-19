@@ -14,12 +14,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
+  ActionFunctionArgs,
   Link,
+  redirect,
   useActionData,
   useNavigation,
   useSubmit,
 } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { authApi } from "@/api";
+import { AxiosError } from "axios";
 
 const formSchema = z.object({
   phone: z
@@ -148,3 +152,24 @@ export function SignUpForm({
     </div>
   );
 }
+
+export const registerAction = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const credentials = Object.fromEntries(formData);
+  try {
+    const response = await authApi.post("/register", credentials);
+
+    if (response.status !== 200) {
+      return { error: response.data || "Register failed" };
+    }
+    const redirectTo = "/register/otp"; // if there is redirect url, redirect to that page else redirect to home page
+    return redirect(redirectTo);
+  } catch (error) {
+    console.log("Login action: ", error);
+    if (error instanceof AxiosError) {
+      const errorMessage = error.response?.data?.message || "Register failed";
+      return { error: errorMessage };
+    }
+    throw error;
+  }
+};
