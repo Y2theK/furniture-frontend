@@ -13,6 +13,9 @@ import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
 import { loginAction, loginLoader } from "./components/auth/LoginForm";
 import api from "./api";
+import AuthRootLayout from "./pages/AuthRootLayout";
+import SignUp from "./pages/auth/SignUp";
+import OTP from "./pages/auth/OTP";
 const SuspenseFallback = () => {
   return <div className="text-center">Loading.......</div>;
 };
@@ -85,6 +88,10 @@ export const router = createBrowserRouter([
   },
   {
     path: "register",
-    element: <Register />,
+    element: <AuthRootLayout />,
+    children: [
+      { index: true, element: <SignUp /> },
+      { path: "otp", element: <OTP /> },
+    ],
   },
 ]);
