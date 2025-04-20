@@ -24,6 +24,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authApi } from "@/api";
 import { AxiosError } from "axios";
+import useAuthStore, { Status } from "@/store/authStore";
 
 const formSchema = z.object({
   phone: z
@@ -154,6 +155,7 @@ export function SignUpForm({
 }
 
 export const registerAction = async ({ request }: ActionFunctionArgs) => {
+  const authStore = useAuthStore.getState();
   const formData = await request.formData();
   const credentials = Object.fromEntries(formData);
   try {
@@ -162,6 +164,9 @@ export const registerAction = async ({ request }: ActionFunctionArgs) => {
     if (response.status !== 200) {
       return { error: response.data || "Register failed" };
     }
+
+    authStore.setAuth(response.data.phone, response.data.token, Status.otp);
+
     const redirectTo = "/register/otp"; // if there is redirect url, redirect to that page else redirect to home page
     return redirect(redirectTo);
   } catch (error) {
