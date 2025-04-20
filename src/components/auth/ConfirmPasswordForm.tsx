@@ -14,12 +14,14 @@ import {
 } from "@/components/ui/form";
 import {
   Link,
+  redirect,
   useActionData,
   useNavigation,
   useSubmit,
 } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PasswordInput } from "./Password-Input";
+import useAuthStore, { Status } from "@/store/authStore";
 
 const formSchema = z.object({
   password: z
@@ -125,3 +127,12 @@ export function ConfirmPasswordForm({
     </div>
   );
 }
+
+export const confirmPasswordLoader = async () => {
+  const authStore = useAuthStore.getState();
+
+  if (authStore.status !== Status.confirm) {
+    return redirect("/register");
+  }
+  return null;
+};

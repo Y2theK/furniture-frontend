@@ -17,6 +17,8 @@ import SignUp from "./pages/auth/SignUp";
 import OTP from "./pages/auth/OTP";
 import ConfirmPassword from "./pages/auth/ConfirmPassword";
 import { registerAction } from "./components/auth/SignUpForm";
+import { otpAction, otpLoader } from "./components/auth/OTPForm";
+import { confirmPasswordLoader } from "./components/auth/ConfirmPasswordForm";
 const SuspenseFallback = () => {
   return <div className="text-center">Loading.......</div>;
 };
@@ -97,8 +99,12 @@ export const router = createBrowserRouter([
         loader: loginLoader,
         action: registerAction,
       },
-      { path: "otp", element: <OTP /> },
-      { path: "confirm-password", element: <ConfirmPassword /> },
+      { path: "otp", element: <OTP />, loader: otpLoader, action: otpAction },
+      {
+        path: "confirm-password",
+        element: <ConfirmPassword />,
+        loader: confirmPasswordLoader,
+      },
     ],
   },
 ]);

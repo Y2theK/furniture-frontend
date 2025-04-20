@@ -167,7 +167,7 @@ export const registerAction = async ({ request }: ActionFunctionArgs) => {
 
     authStore.setAuth(response.data.phone, response.data.token, Status.otp);
 
-    const redirectTo = "/register/otp"; // if there is redirect url, redirect to that page else redirect to home page
+    const redirectTo = "/register/otp";
     return redirect(redirectTo);
   } catch (error) {
     console.log("Login action: ", error);

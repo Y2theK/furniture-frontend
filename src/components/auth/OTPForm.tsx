@@ -18,7 +18,9 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import {
+  ActionFunctionArgs,
   Link,
+  redirect,
   useActionData,
   useNavigation,
   useSubmit,
@@ -26,6 +28,9 @@ import {
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { Icons } from "../icons";
 import { cn } from "@/lib/utils";
+import useAuthStore, { Status } from "@/store/authStore";
+import { authApi } from "@/api";
+import { AxiosError } from "axios";
 
 const formSchema = z.object({
   otp: z.string().min(6, {
@@ -127,3 +132,41 @@ export function InputOTPForm({
     </div>
   );
 }
+
+export const otpLoader = async () => {
+  const authStore = useAuthStore.getState();
+
+  if (authStore.status !== Status.otp) {
+    return redirect("/register");
+  }
+  return null;
+};
+
+export const otpAction = async ({ request }: ActionFunctionArgs) => {
+  const authStore = useAuthStore.getState();
+  const formData = await request.formData();
+  const credentials = {
+    phone: authStore.phone,
+    token: authStore.token,
+    otp: formData.get("otp"),
+  };
+  try {
+    const response = await authApi.post("/verify-otp", credentials);
+
+    if (response.status !== 200) {
+      return { error: response.data || "OTP failed" };
+    }
+
+    authStore.setAuth(response.data.phone, response.data.token, Status.confirm);
+
+    const redirectTo = "/register/confirm-password";
+    return redirect(redirectTo);
+  } catch (error) {
+    console.log("Login action: ", error);
+    if (error instanceof AxiosError) {
+      const errorMessage = error.response?.data?.message || "OTP failed";
+      return { error: errorMessage };
+    }
+    throw error;
+  }
+};
