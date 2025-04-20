@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
+  ActionFunctionArgs,
   Link,
   redirect,
   useActionData,
@@ -22,6 +23,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PasswordInput } from "./Password-Input";
 import useAuthStore, { Status } from "@/store/authStore";
+import { authApi } from "@/api";
+import { AxiosError } from "axios";
+import { useState } from "react";
 
 const formSchema = z.object({
   password: z
@@ -51,6 +55,7 @@ export function ConfirmPasswordForm({
   const navigation = useNavigation();
 
   const isSubmitting = navigation.state === "submitting";
+  const [error, setError] = useState<string | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,6 +65,12 @@ export function ConfirmPasswordForm({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    if (values.password !== values.confirmPassword) {
+      setError("Password and Confirm Password do not match");
+      return;
+    }
+    setError(null);
+
     // pass the form data to the action function
     submit(values, {
       method: "POST",
@@ -113,8 +124,21 @@ export function ConfirmPasswordForm({
                     </FormItem>
                   )}
                 />
+                {error && (
+                  <div className="flex gap-2">
+                    <p className="text-red-400">{error}</p>
+                  </div>
+                )}
                 {actionData && (
-                  <p className="text-red-400">{actionData?.message}</p>
+                  <div className="flex gap-2">
+                    <p className="text-red-400">{actionData?.message}</p>
+                    <Link
+                      to="/register"
+                      className="text-xs underline underline-offset-4"
+                    >
+                      Back to Register
+                    </Link>
+                  </div>
                 )}
                 <Button type="submit" className="w-full">
                   {isSubmitting ? "Submitting..." : "Confirm"}
@@ -135,4 +159,36 @@ export const confirmPasswordLoader = async () => {
     return redirect("/register");
   }
   return null;
+};
+
+export const confirmPasswordAction = async ({
+  request,
+}: ActionFunctionArgs) => {
+  const authStore = useAuthStore.getState();
+  const formData = await request.formData();
+  const credentials = {
+    phone: authStore.phone,
+    token: authStore.token,
+    password: formData.get("password"),
+  };
+  try {
+    const response = await authApi.post("/confirm-password", credentials);
+
+    if (response.status !== 201) {
+      return { error: response.data || "Confirm Password failed" };
+    }
+
+    authStore.clearAuth();
+
+    const redirectTo = "/";
+    return redirect(redirectTo);
+  } catch (error) {
+    console.log("Login action: ", error);
+    if (error instanceof AxiosError) {
+      const errorMessage =
+        error.response?.data?.message || "Confirm Password failed";
+      return { error: errorMessage };
+    }
+    throw error;
+  }
 };

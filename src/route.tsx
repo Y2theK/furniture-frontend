@@ -18,7 +18,10 @@ import OTP from "./pages/auth/OTP";
 import ConfirmPassword from "./pages/auth/ConfirmPassword";
 import { registerAction } from "./components/auth/SignUpForm";
 import { otpAction, otpLoader } from "./components/auth/OTPForm";
-import { confirmPasswordLoader } from "./components/auth/ConfirmPasswordForm";
+import {
+  confirmPasswordAction,
+  confirmPasswordLoader,
+} from "./components/auth/ConfirmPasswordForm";
 const SuspenseFallback = () => {
   return <div className="text-center">Loading.......</div>;
 };
@@ -104,6 +107,7 @@ export const router = createBrowserRouter([
         path: "confirm-password",
         element: <ConfirmPassword />,
         loader: confirmPasswordLoader,
+        action: confirmPasswordAction,
       },
     ],
   },
